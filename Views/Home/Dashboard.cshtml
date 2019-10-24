@@ -1,0 +1,35 @@
+<div class="row">
+    <h2 class="col-9">Welcome to the Wedding Planner!</h2>
+    <a href="/logout" class="col-3 text-right">Log Out</a>
+</div>
+@model List<Wedding>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Wedding</th>
+            <th scope="col">Date</th>
+            <th scope="col">Guests</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in Model){
+        <tr>
+            <th scope="row"><a href="/wedding/@i.WeddingId">@i.WedderOne & @i.WedderTwo</a></th>
+            <td>@i.WeddingDate.ToShortDateString()</td>
+            <td>@i.GuestCount</td>
+            @if(i.Creator == ViewBag.User){
+                <td><a href="/delete/@i.WeddingId">Delete</a></td>
+            } else if(i.Guests.Any(a=>a.UserId == ViewBag.User.UserId)){
+                <td><a href="/UnRSVP/@i.WeddingId/@ViewBag.User.UserId">Un-RSVP</a></td>
+            } else {
+                <td><a href="/RSVP/@i.WeddingId/@ViewBag.User.UserId">RSVP</a></td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="row text-right">
+    <span class="col-10"></span>
+    <span class="col-2 text-right"><a href="/wedding" class="btn btn-primary">New Wedding</a></span>
+</div>

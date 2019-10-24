@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col">
+        @model User
+        <form asp-action="CreateUser" asp-controller="Home" method="post" class="mx-auto w-50">
+                <span asp-validation-for="FName"></span>
+            <div class="row">
+                <label class="col-7" asp-for="FName">First Name:</label>
+                <input class="col" asp-for="FName">
+            </div>
+                <span asp-validation-for="LName"></span>
+            <div class="row">
+                <label class="col-7" asp-for="LName">Last Name:</label>
+                <input class="col" asp-for="LName">
+            </div>
+                <span asp-validation-for="Email"></span>
+            <div class="row">
+                <label class="col-7" asp-for="Email">Email: </label>
+                <input class="col" asp-for="Email">
+            </div>
+                <span asp-validation-for="Password"></span>
+            <div class="row">
+                <label class="col-7" asp-for="Password">Password:</label>
+                <input class="col" asp-for="Password">
+            </div>
+                <span asp-validation-for="ConfirmPassword"></span>
+            <div class="row">
+                <label class="col-7" asp-for="ConfirmPassword">Confirm Password: </label>
+                <input class="col" asp-for="ConfirmPassword">
+            </div>
+            <input class="float-right" value="Register" type="submit">    
+        </form>
+    </div>
+    <div class="col">
+        <form asp-action="Login" asp-controller="Home" method="post" class="mx-auto w-50">
+            <div class="row">
+                <label class="col">Email:</label>
+                <input class="col" name="Email">
+            </div>
+            <div class="row">
+                <label class="col">Password:</label>
+                <input class="col" type="password" name="Password">
+            </div>
+            <input class="float-right" value="Login" type="submit">    
+        </form>
+        @ViewBag.fail
+    </div>
+</div>

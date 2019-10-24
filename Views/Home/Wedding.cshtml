@@ -1,0 +1,26 @@
+<div class="row">
+    <h2 class="col-8">Plan your wedding!</h2>
+    <a href="/dashboard" class="col-2 text-right">Dashboard</a>
+    <a href="/logout" class="col-2 text-right">Log Out</a>
+</div>
+@model Wedding
+<form asp-action="CreateWedding" asp-controller="Home" method="post" class="mx-auto w-50">
+    <div class="row">
+        <label class="col-7" asp-for="WedderOne">Wedder one:</label>
+        <input class="col" asp-for="WedderOne">
+    </div>
+    <div class="row">
+        <label class="col-7" asp-for="WedderTwo">Wedder two:</label>
+        <input class="col" asp-for="WedderTwo">
+    </div>
+    <div class="row">
+        <label class="col-7" asp-for="WeddingDate">Wedding date: </label>
+        <input class="col" type="date" asp-for="WeddingDate">
+    </div>
+    <div class="row">
+        <label class="col-7" asp-for="Address">Address: </label>
+        <input class="col" asp-for="Address">
+    </div>
+    <input class="float-right" value="Create" type="submit">    
+</form>
+<div asp-validation-summary="All" class="mx-auto w-50 text-danger"></div>

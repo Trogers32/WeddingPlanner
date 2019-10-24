@@ -1,0 +1,17 @@
+<div class="row">
+    <h2 class="col-8">Wedding of @ViewBag.Wedding.WedderOne and @ViewBag.Wedding.WedderTwo</h2>
+    <a href="/dashboard" class="col-2 text-right">Dashboard</a>
+    <a href="/logout" class="col-2 text-right">Log Out</a>
+</div>
+<div class="row">Date: @ViewBag.Wedding.WeddingDate.ToShortDateString()</div>
+<div class="row">
+    <div class="col">
+        <h4>Guests:</h4>
+        @foreach(var i in @ViewBag.Guests){
+            <p>@i.FName @i.LName</p>
+        }
+    </div>
+    <div class="col">
+        map
+    </div>
+</div>
