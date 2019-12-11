@@ -85,20 +85,10 @@ namespace WeddingPlanner.Controllers
         public IActionResult Dashboard()
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             IEnumerable<Wedding> weds = dbContext.Weddings.Include(a=>a.Guests).ThenInclude(b=>b.User).ToList();
             ViewBag.Weddings = weds;
-            foreach(var i in ViewBag.Weddings){
-                int x = 0;
-                if(i.Guests != null){
-                    foreach(var s in i.Guests){
-                        x++;
-                    }
-                }
-                i.GuestCount = x;
-            }
             User cUser = dbContext.Users.FirstOrDefault(a=>a.Email == HttpContext.Session.GetString("Email"));
             ViewBag.User = cUser;
             return View("Dashboard", weds);
@@ -107,7 +97,6 @@ namespace WeddingPlanner.Controllers
         public IActionResult Wedding()
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             return View("Wedding");
@@ -119,7 +108,6 @@ namespace WeddingPlanner.Controllers
         public IActionResult CreateWedding(Wedding newWedding)
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             if(newWedding.WeddingDate <= DateTime.Now){
@@ -142,7 +130,6 @@ namespace WeddingPlanner.Controllers
         public IActionResult SWedding(int Id)
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             List<User> gs = new List<User>();
@@ -160,7 +147,6 @@ namespace WeddingPlanner.Controllers
         public IActionResult RSVP(int WeddingId, int UserId)
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             Associations newAss = new Associations();
@@ -174,7 +160,6 @@ namespace WeddingPlanner.Controllers
         public IActionResult UnRSVP(int WeddingId, int UserId)
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             Associations newAss = dbContext.Associations.FirstOrDefault(y=>y.UserId == UserId && y.WeddingId == WeddingId);
@@ -186,7 +171,6 @@ namespace WeddingPlanner.Controllers
         public IActionResult RemoveWedding(int WeddingId)
         {
             if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
-                ViewBag.fail = "Incorrect email or password.";
                 return RedirectToAction("Index");
             }
             Wedding rWed = dbContext.Weddings.FirstOrDefault(y=>y.WeddingId == WeddingId);

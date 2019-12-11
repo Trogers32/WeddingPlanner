@@ -26,9 +26,8 @@ namespace WeddingPlanner.Models
         [Required(ErrorMessage = "An address is required.")]
         public string Address {get;set;}
 ///////////////////////////////////////////////////////////////////////
-        public int GuestCount {get;set;}
         public User Creator {get;set;}
-        public List<Associations> Guests {get;set;}
+        public List<Associations> Guests {get;set;} 
 ///////////////////////////////////////////////////////////////////////
     
         // We can provide some hardcoded default values like so:

@@ -1,28 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mits\\Desktop\\Coding_Dojo\\Work\\C#\\Entity\\WeddingPlanner\\WeddingPlanner.csproj": {}
+    "C:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\WeddingPlanner.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mits\\Desktop\\Coding_Dojo\\Work\\C#\\Entity\\WeddingPlanner\\WeddingPlanner.csproj": {
+    "C:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\WeddingPlanner.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mits\\Desktop\\Coding_Dojo\\Work\\C#\\Entity\\WeddingPlanner\\WeddingPlanner.csproj",
+        "projectUniqueName": "C:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\WeddingPlanner.csproj",
         "projectName": "WeddingPlanner",
-        "projectPath": "C:\\Users\\Mits\\Desktop\\Coding_Dojo\\Work\\C#\\Entity\\WeddingPlanner\\WeddingPlanner.csproj",
+        "projectPath": "C:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\WeddingPlanner.csproj",
         "packagesPath": "C:\\Users\\Mits\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mits\\Desktop\\Coding_Dojo\\Work\\C#\\Entity\\WeddingPlanner\\obj\\",
+        "outputPath": "C:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Mits\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Mits\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

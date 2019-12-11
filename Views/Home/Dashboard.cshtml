@@ -17,7 +17,7 @@
         <tr>
             <th scope="row"><a href="/wedding/@i.WeddingId">@i.WedderOne & @i.WedderTwo</a></th>
             <td>@i.WeddingDate.ToShortDateString()</td>
-            <td>@i.GuestCount</td>
+            <td>@i.Guests.Count</td>
             @if(i.Creator == ViewBag.User){
                 <td><a href="/delete/@i.WeddingId">Delete</a></td>
             } else if(i.Guests.Any(a=>a.UserId == ViewBag.User.UserId)){
