@@ -2,7 +2,7 @@
     <h2 class="col-9">Welcome to the Wedding Planner!</h2>
     <a href="/logout" class="col-3 text-right">Log Out</a>
 </div>
-@model List<Wedding>
+@model Wrapper
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
@@ -13,17 +13,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var i in Model){
+        @foreach(var i in Model.weddings){
         <tr>
             <th scope="row"><a href="/wedding/@i.WeddingId">@i.WedderOne & @i.WedderTwo</a></th>
             <td>@i.WeddingDate.ToShortDateString()</td>
             <td>@i.Guests.Count</td>
-            @if(i.Creator == ViewBag.User){
+            @if(i.Creator == Model.user){
                 <td><a href="/delete/@i.WeddingId">Delete</a></td>
-            } else if(i.Guests.Any(a=>a.UserId == ViewBag.User.UserId)){
-                <td><a href="/UnRSVP/@i.WeddingId/@ViewBag.User.UserId">Un-RSVP</a></td>
+            } else if(i.Guests.Any(a=>a.UserId == Model.user.UserId)){
+                <td><a href="/UnRSVP/@i.WeddingId/@Model.user.UserId">Un-RSVP</a></td>
             } else {
-                <td><a href="/RSVP/@i.WeddingId/@ViewBag.User.UserId">RSVP</a></td>
+                <td><a href="/RSVP/@i.WeddingId/@Model.user.UserId">RSVP</a></td>
             }
         </tr>
         }

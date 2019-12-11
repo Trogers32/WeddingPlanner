@@ -47,7 +47,6 @@ C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\WeddingPlann
 C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\WeddingPlanner.RazorCoreGenerate.cache
 C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Dashboard.g.cshtml.cs
 C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
-C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
 C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\Razor\Views\Home\SWedding.g.cshtml.cs
 C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\Razor\Views\Home\Wedding.g.cshtml.cs
 C:\Users\Mits\Desktop\GitHub\WeddingPlanner\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs

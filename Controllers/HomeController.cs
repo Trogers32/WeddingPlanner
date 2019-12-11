@@ -18,14 +18,15 @@ namespace WeddingPlanner.Controllers
         // here we can "inject" our context service into the constructor
         public HomeController(MyContext context)
         {
-            dbContext = context;
+            dbContext = context;   ///Database variable link
         }
         public IActionResult Index()
         {
             return View();
         }
+
         /////////////////////////////////////////////////////////////////////////////////
-        /////////////////////Register/////////////////////////////////////////////////////
+        /////////////////////Register////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////
         [HttpPost("create")]
         public IActionResult CreateUser(User newUser)
@@ -49,8 +50,9 @@ namespace WeddingPlanner.Controllers
             } 
             return View("Index");
         }
+
         /////////////////////////////////////////////////////////////////////////////////
-        /////////////////////Login/////////////////////////////////////////////////////
+        /////////////////////Login///////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////
         [HttpPost("login")]
         public IActionResult Login(string Email, string Password)
@@ -71,8 +73,9 @@ namespace WeddingPlanner.Controllers
             ViewBag.fail = "Incorrect email or password.";
             return View("Index");
         }
+
         /////////////////////////////////////////////////////////////////////////////////
-        /////////////////////Logout/////////////////////////////////////////////////////
+        /////////////////////Logout//////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("logout")]
         public IActionResult Logout()
@@ -81,59 +84,73 @@ namespace WeddingPlanner.Controllers
             return RedirectToAction("Index");
         }
 
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////Dashboard///////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("dashboard")]
         public IActionResult Dashboard()
-        {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+        {//HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
-            IEnumerable<Wedding> weds = dbContext.Weddings.Include(a=>a.Guests).ThenInclude(b=>b.User).ToList();
-            ViewBag.Weddings = weds;
-            User cUser = dbContext.Users.FirstOrDefault(a=>a.Email == HttpContext.Session.GetString("Email"));
-            ViewBag.User = cUser;
-            return View("Dashboard", weds);
+            Wrapper data = new Wrapper();
+            data.weddings = dbContext.Weddings.Include(a=>a.Guests).ThenInclude(b=>b.User).ToList();
+            data.user = dbContext.Users.FirstOrDefault(a=>a.Email == HttpContext.Session.GetString("Email"));
+            return View("Dashboard", data);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////Wedding creation page///////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("wedding")]
         public IActionResult Wedding()
         {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
             return View("Wedding");
         }
+
         /////////////////////////////////////////////////////////////////////////////////
-        /////////////////////Create Wedding/////////////////////////////////////////////////////
+        /////////////////////Create Wedding method///////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////
         [HttpPost("CreateWedding")]
         public IActionResult CreateWedding(Wedding newWedding)
         {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
             if(newWedding.WeddingDate <= DateTime.Now){
                 ModelState.AddModelError("WeddingDate", "Wedding must be in the future.");
             }else if(ModelState.IsValid){
-                User cUser = dbContext.Users.FirstOrDefault(a=>a.Email == HttpContext.Session.GetString("Email"));
-                Console.WriteLine(cUser.Email);
-                newWedding.Creator = cUser;
-                dbContext.Add(newWedding);
-                Associations newAss = new Associations();
-                newAss.UserId = cUser.UserId;
-                newAss.WeddingId = newWedding.WeddingId;
-                dbContext.Add(newAss);
-                dbContext.SaveChanges();
+                User cUser = dbContext.Users
+                    .FirstOrDefault(a=>a.Email == HttpContext.Session.GetString("Email"));
+                newWedding.Creator = cUser;                                                 //assign current user as the creator of the wedding
+                dbContext.Add(newWedding);                                                  //add the new wedding to the database
+                Associations newAssociation = new Associations();                           //create a new rsvp entry and automatically rsvp the creator
+                newAssociation.UserId = cUser.UserId;
+                newAssociation.WeddingId = newWedding.WeddingId;
+                dbContext.Add(newAssociation);
+                dbContext.SaveChanges();                                                    //save the database changes
                 return RedirectToAction("Dashboard");
             }
             return View("Wedding");
         }
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////Individual wedding page/////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("wedding/{Id}")]
         public IActionResult SWedding(int Id)
         {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
             List<User> gs = new List<User>();
-            Wedding wed = dbContext.Weddings.Include(a=>a.Guests).ThenInclude(b=>b.User).FirstOrDefault(y=>y.WeddingId == Id);
+            Wedding wed = dbContext.Weddings
+                .Include(a=>a.Guests)
+                .ThenInclude(b=>b.User)
+                .FirstOrDefault(y=>y.WeddingId == Id);
             ViewBag.Wedding = wed;
             if(wed.Guests != null){
                 foreach(var s in wed.Guests){
@@ -143,10 +160,14 @@ namespace WeddingPlanner.Controllers
             ViewBag.Guests = gs;
             return View("SWedding");
         }
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////RSVP method/////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("RSVP/{WeddingId}/{UserId}")]
         public IActionResult RSVP(int WeddingId, int UserId)
         {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
             Associations newAss = new Associations();
@@ -156,10 +177,14 @@ namespace WeddingPlanner.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("Dashboard");
         }
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////UnRSVP method///////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("UnRSVP/{WeddingId}/{UserId}")]
         public IActionResult UnRSVP(int WeddingId, int UserId)
         {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
             Associations newAss = dbContext.Associations.FirstOrDefault(y=>y.UserId == UserId && y.WeddingId == WeddingId);
@@ -167,10 +192,14 @@ namespace WeddingPlanner.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("Dashboard");
         }
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////Delete a wedding////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
         [HttpGet("delete/{WeddingId}")]
         public IActionResult RemoveWedding(int WeddingId)
         {
-            if(HttpContext.Session.GetString("Email") == "" || HttpContext.Session.GetString("Email")==null){
+            if(!dbContext.Users.Any(e => e.Email == HttpContext.Session.GetString("Email"))){
                 return RedirectToAction("Index");
             }
             Wedding rWed = dbContext.Weddings.FirstOrDefault(y=>y.WeddingId == WeddingId);
@@ -178,10 +207,7 @@ namespace WeddingPlanner.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("Dashboard");
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -2971,11 +2971,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\Mits\\Desktop\\GitHub\\WeddingPlanner\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
