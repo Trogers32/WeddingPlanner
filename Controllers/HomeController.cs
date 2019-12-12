@@ -94,7 +94,10 @@ namespace WeddingPlanner.Controllers
                 return RedirectToAction("Index");
             }
             Wrapper data = new Wrapper();
-            data.weddings = dbContext.Weddings.Include(a=>a.Guests).ThenInclude(b=>b.User).ToList();
+            data.weddings = dbContext.Weddings
+                .Include(a=>a.Guests)
+                .ThenInclude(b=>b.User)
+                .ToList();
             data.user = dbContext.Users.FirstOrDefault(a=>a.Email == HttpContext.Session.GetString("Email"));
             return View("Dashboard", data);
         }
